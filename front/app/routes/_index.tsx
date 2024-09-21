@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
-import { getUserBirthdays } from "../../api/birthdayApi";
+import { getUserBirthdays } from "handlers";
 
 export default function Index() {
   const [birthdays, setBirthdays] = useState([]);
@@ -10,11 +10,10 @@ export default function Index() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      setUserAuthenticated(true); // Устанавливаем состояние авторизации
-      // Запрашиваем дни рождения с бэкенда
+      setUserAuthenticated(true);
       getUserBirthdays()
         .then((birthdaysData) => {
-          setBirthdays(birthdaysData); // Устанавливаем список дней рождения
+          setBirthdays(birthdaysData);
         })
         .catch((error) => {
           console.error("Ошибка при получении дней рождения:", error);

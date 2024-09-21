@@ -1,7 +1,7 @@
 // front/app/routes/login.tsx
 import { Form, Link, useNavigate } from "@remix-run/react";
 import { useState } from "react";
-import { loginUser } from "../../api/userApi";
+import { loginUser } from "handlers";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -15,8 +15,8 @@ export default function Login() {
 
 		try {
 			const response = await loginUser(email, password);
-			localStorage.setItem("token", response.token); // Сохраняем JWT токен
-			navigate("/"); // Перенаправляем на главную страницу
+			localStorage.setItem("token", response.token);
+			navigate("/");
 		} catch (err) {
 			setError("Ошибка авторизации");
 		}

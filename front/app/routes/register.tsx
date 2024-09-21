@@ -1,7 +1,6 @@
-// front/app/routes/register.tsx
 import { Form, Link, useNavigate } from "@remix-run/react";
 import { useState } from "react";
-import { registerUser } from "../../api/userApi";
+import { registerUser } from "handlers";
 
 export default function Register() {
 	const navigate = useNavigate();

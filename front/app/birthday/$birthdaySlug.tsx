@@ -1,5 +1,5 @@
 import { useLoaderData, Form } from "@remix-run/react";
-import { getBirthday } from "../../api/birthdayApi"; // Импорт API-функции
+import { getBirthday } from "handlers";
 
 export async function loader({ params }: any) {
 	const { birthdaySlug } = params;

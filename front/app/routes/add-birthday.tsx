@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "@remix-run/react";
-import { createBirthday } from "../../api/birthdayApi";
+import { createBirthday } from "handlers";
 
 export default function AddBirthday() {
 	const [firstName, setFirstName] = useState("");
@@ -13,8 +13,8 @@ export default function AddBirthday() {
 		event.preventDefault();
 
 		try {
-			await createBirthday(firstName, lastName, birthdate); // Отправляем данные на бэкенд
-			navigate("/"); // Перенаправляем на главную страницу после успешного создания
+			await createBirthday(firstName, lastName, birthdate);
+			navigate("/");
 		} catch (err) {
 			setError("Не удалось создать запись о дне рождения");
 			console.error(err);
