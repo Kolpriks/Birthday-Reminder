@@ -2,8 +2,15 @@ import { useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
 import { getUserBirthdays } from "handlers";
 
+interface Birthday {
+  id: number;
+  first_name: string;
+  last_name: string;
+  birthdate: string;
+}
+
 export default function Index() {
-  const [birthdays, setBirthdays] = useState([]);
+  const [birthdays, setBirthdays] = useState<Birthday[]>([]);
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -12,7 +19,7 @@ export default function Index() {
     if (token) {
       setUserAuthenticated(true);
       getUserBirthdays()
-        .then((birthdaysData) => {
+        .then((birthdaysData: Birthday[]) => {
           setBirthdays(birthdaysData);
         })
         .catch((error) => {
@@ -45,7 +52,7 @@ export default function Index() {
         {userAuthenticated ? (
           <div>
             {birthdays.length > 0 ? (
-              birthdays.map((birthday: any) => (
+              birthdays.map((birthday) => (
                 <div key={birthday.id}>
                   <Link to={`/birthday/${birthday.first_name}-${birthday.last_name}-${birthday.birthdate}`}>
                     {birthday.first_name} {birthday.last_name} - {new Date(birthday.birthdate).toLocaleDateString()}

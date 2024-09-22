@@ -1,16 +1,26 @@
 import { useLoaderData, Form } from "@remix-run/react";
 import { getBirthday } from "handlers";
 
-export async function loader({ params }: any) {
+interface Birthday {
+	first_name: string;
+	last_name: string;
+	birthdate: string;
+}
+
+interface LoaderParams {
+	birthdaySlug: string;
+}
+
+export async function loader({ params }: { params: LoaderParams }) {
 	const { birthdaySlug } = params;
 	const [firstName, lastName, birthdate] = birthdaySlug.split("-");
-	const birthday = await getBirthday(firstName, lastName, birthdate);
+	const birthday: Birthday = await getBirthday(firstName, lastName, birthdate);
 
 	return { birthday };
 }
 
 export default function BirthdayDetail() {
-	const { birthday } = useLoaderData();
+	const { birthday } = useLoaderData<{ birthday: Birthday }>();
 
 	return (
 		<div className="container">
