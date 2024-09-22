@@ -1,0 +1,102 @@
+name: Birthday Reminder
+
+# Триггер пайплайна при каждом пуше в ветку master
+# По идее на каждый пуш или pr будет проиходить запуск тестов и прочая фигня для проверки
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: birthday_reminder
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U user -d birthday_reminder"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        volumes:
+          - ./db/scripts:/docker-entrypoint-initdb.d
+
+    steps:
+      - name: Start echo
+        run: echo "Начало запуска CI для бекенда"
+      
+      # Шаг 1: Получение кода
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Шаг 2: Установка Node.js для бэкенда
+      - name: Set up Node.js for backend
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Шаг 3: Установка зависимостей для бэкенда
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./backend
+
+      # Шаг 4: Ожидание, пока база данных будет готова
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h localhost -p 5432 -U user -d birthday_reminder; do
+            echo "Waiting for database to be ready...";
+            sleep 2;
+          done
+
+      # Шаг 5: Сборка TypeScript кода
+      - name: Build backend
+        run: npm run build
+        working-directory: ./backend
+
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start echo for frontend
+        run: echo "Начало запуска CI для фронтенда"
+
+      # Шаг 1: Получение кода
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Шаг 2: Установка Node.js для фронтенда
+      - name: Set up Node.js for frontend
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Шаг 3: Установка зависимостей для фронтенда
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frontend
+
+      # Шаг 4: Линтинг кода
+      - name: Lint frontend code
+        run: npm run lint
+        working-directory: ./frontend
+
+      # Шаг 5: Сборка фронтенда
+      - name: Build frontend
+        run: npm run build
+        working-directory: ./frontend
+
+      # Шаг 6: TypeScript проверка типов
+      - name: Typecheck frontend
+        run: npm run typecheck
+        working-directory: ./frontend
