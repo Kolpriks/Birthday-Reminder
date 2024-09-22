@@ -116,9 +116,9 @@ jobs:
       # Шаг 2: Деплой фронтенда на виртуальную машину
       - name: Deploy frontend
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cd /Birthday-Reminder/front && git pull && npm install && pm2 restart front'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cd Birthday-Reminder/front && git pull && npm install && pm2 restart front'
 
-      # Шаг 3: Деплой бекенда на виртуальную машину
-      - name: Deploy backend
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cd /Birthday-Reminder/back && git pull && npm install && pm2 restart back'
+      # # Шаг 3: Деплой бекенда на виртуальную машину
+      # - name: Deploy backend
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'cd /Birthday-Reminder/back && git pull && npm install && pm2 restart back'
