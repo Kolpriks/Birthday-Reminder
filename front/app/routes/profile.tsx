@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@remix-run/react";
 import { getUser } from "handlers";
 
+interface User {
+	email: string,
+	password: string,
+	name: string,
+	surname: string,
+	id: number,
+}
+
 export default function Profile() {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState<User | null>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {

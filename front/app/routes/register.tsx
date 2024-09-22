@@ -17,7 +17,11 @@ export default function Register() {
 			await registerUser(email, password, confirmPassword);
 			navigate("/login");
 		} catch (err) {
-			setError(err.message);
+			if (err instanceof Error) {
+				setError(err.message);
+			} else {
+				setError("Произошла неизвестная ошибка");
+			}
 		}
 	};
 
