@@ -1,5 +1,5 @@
 export async function addBirthday(firstName: string, lastName: string, birthdate: string) {
-	const response = await fetch("http://localhost:8080/api/birthday", {
+	const response = await fetch("http://localhost:8080/api/add-birthday", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

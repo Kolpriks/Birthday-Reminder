@@ -5,11 +5,11 @@ export async function createBirthday(firstName: string, lastName: string, birthd
 		throw new Error("Пользователь не авторизован");
 	}
 
-	const response = await fetch("http://localhost:8080/api/birthday", {
+	const response = await fetch("http://localhost:8080/api/add-birthday", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`, // Передаем токен для авторизации
+			Authorization: `Bearer ${token}`,
 		},
 		body: JSON.stringify({
 			first_name: firstName,

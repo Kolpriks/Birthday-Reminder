@@ -1,14 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { addBirthday } from './routes/addBirthday';
-import { getAllBirthdays } from './routes/getAllBirthdays';
-import { updateBirthday } from './routes/updateBirthday';
-import { deleteBirthday } from './routes/deleteBirthday';
-import { registerUser } from './routes/registerUser';
-import { deleteUser } from './routes/deleteUser';
-import { loginUser } from './routes/loginUser';
-import { getUser } from './routes/user';
+import { addBirthday } from './routes/birthdays/addBirthday';
+import { getAllBirthdays } from './routes/birthdays/getAllBirthdays';
+import { updateBirthday } from './routes/birthdays/updateBirthday';
+import { deleteBirthday } from './routes/birthdays/deleteBirthday';
+import { registerUser } from './routes/user/registerUser';
+import { deleteUser } from './routes/user/deleteUser';
+import { loginUser } from './routes/user/loginUser';
+import { getUser } from './routes/user/user';
 import postgres from 'postgres';
 
 dotenv.config();
@@ -26,15 +26,15 @@ const sql = postgres({
 	password: process.env.DB_PASSWORD,
 });
 
-app.use('/api/birthday', addBirthday(sql));
-app.use('/api/birthdays', getAllBirthdays(sql));
-app.use('/api/birthday', updateBirthday(sql));
-app.use('/api/birthday', deleteBirthday(sql));
+app.use('/api/add-birthday', addBirthday(sql));
+app.use('/api/get-all-birthdays', getAllBirthdays(sql));
+app.use('/api/update-birthday', updateBirthday(sql));
+app.use('/api/delete-birthday', deleteBirthday(sql));
 
-app.use('/api/register', registerUser(sql));
-app.use('/api/deleteUser', deleteUser(sql));
-app.use('/api/login', loginUser(sql));
-app.use('/api/user', getUser(sql));
+app.use('/api/user-register', registerUser(sql));
+app.use('/api/user-delete', deleteUser(sql));
+app.use('/api/user-login', loginUser(sql));
+app.use('/api/user-get', getUser(sql));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

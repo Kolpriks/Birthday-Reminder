@@ -5,11 +5,11 @@ export async function getUserBirthdays() {
 		throw new Error("Пользователь не авторизован");
 	}
 
-	const response = await fetch("http://localhost:8080/api/birthdays", {
+	const response = await fetch("http://localhost:8080/api/get-all-birthdays", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`, // Передаем токен в заголовках
+			Authorization: `Bearer ${token}`,
 		},
 	});
 

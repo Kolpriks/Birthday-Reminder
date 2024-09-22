@@ -1,5 +1,5 @@
 export async function deleteBirthday(id: number) {
-	const response = await fetch(`http://localhost:8080/api/birthday/${id}`, {
+	const response = await fetch(`http://localhost:8080/api/delete-birthday/${id}`, {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",

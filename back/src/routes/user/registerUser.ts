@@ -6,9 +6,9 @@ export const registerUser = (sql: postgres.Sql<any>) => {
 	const router = Router();
 
 	router.post('/', async (req: Request, res: Response) => {
-		const { email, password } = req.body;
+		const { name, surname, email, password } = req.body;
 
-		if (!email || !password) {
+		if (!name || !surname || !email || !password) {
 			return res.status(400).json({ error: 'All fields are required' });
 		}
 
@@ -16,10 +16,10 @@ export const registerUser = (sql: postgres.Sql<any>) => {
 			const hashedPassword = await bcrypt.hash(password, 10);
 
 			const result = await sql`
-        INSERT INTO users (email, password)
-        VALUES (${email}, ${hashedPassword})
-        RETURNING id, email
-      `;
+				INSERT INTO users (name, surname, email, password)
+				VALUES (${name}, ${surname}, ${email}, ${hashedPassword})
+				RETURNING id, email
+			`;
 			res.status(201).json(result[0]);
 		} catch (err) {
 			console.error(err);

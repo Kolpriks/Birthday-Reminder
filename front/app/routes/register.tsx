@@ -9,12 +9,14 @@ export default function Register() {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const formData = new FormData(event.currentTarget);
+		const name = formData.get("name") as string;
+		const surname = formData.get("surname") as string;
 		const email = formData.get("email") as string;
 		const password = formData.get("password") as string;
 		const confirmPassword = formData.get("confirmPassword") as string;
 
 		try {
-			await registerUser(email, password, confirmPassword);
+			await registerUser(name, surname, email, password, confirmPassword);
 			navigate("/login");
 		} catch (err) {
 			if (err instanceof Error) {
@@ -30,6 +32,14 @@ export default function Register() {
 			<h1>Регистрация</h1>
 			{error && <p className="error">{error}</p>}
 			<Form method="post" onSubmit={handleSubmit}>
+				<label>
+					Name:
+					<input type="name" name="name" required />
+				</label>
+				<label>
+					Surname:
+					<input type="surname" name="surname" required />
+				</label>
 				<label>
 					Email:
 					<input type="email" name="email" required />

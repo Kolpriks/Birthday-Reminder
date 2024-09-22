@@ -5,7 +5,7 @@ export async function getUser() {
 		throw new Error("Пользователь не авторизован");
 	}
 
-	const response = await fetch("http://localhost:8080/api/user", {
+	const response = await fetch("http://localhost:8080/api/user-get", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
