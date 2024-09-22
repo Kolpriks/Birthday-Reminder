@@ -30,7 +30,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         volumes:
-          - ./db/scripts:/docker-entrypoint-initdb.d
+          - /tmp/db-init:/docker-entrypoint-initdb.d
 
     steps:
       - name: Start echo
@@ -49,7 +49,7 @@ jobs:
       # Шаг 3: Установка зависимостей для бэкенда
       - name: Install dependencies
         run: npm install
-        working-directory: ./backend
+        working-directory: ./back
 
       # Шаг 4: Ожидание, пока база данных будет готова
       - name: Wait for PostgreSQL
@@ -62,7 +62,7 @@ jobs:
       # Шаг 5: Сборка TypeScript кода
       - name: Build backend
         run: npm run build
-        working-directory: ./backend
+        working-directory: ./back
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -84,19 +84,19 @@ jobs:
       # Шаг 3: Установка зависимостей для фронтенда
       - name: Install dependencies
         run: npm install
-        working-directory: ./frontend
+        working-directory: ./front
 
       # Шаг 4: Линтинг кода
       - name: Lint frontend code
         run: npm run lint
-        working-directory: ./frontend
+        working-directory: ./front
 
       # Шаг 5: Сборка фронтенда
       - name: Build frontend
         run: npm run build
-        working-directory: ./frontend
+        working-directory: ./front
 
       # Шаг 6: TypeScript проверка типов
       - name: Typecheck frontend
         run: npm run typecheck
-        working-directory: ./frontend
+        working-directory: ./front
