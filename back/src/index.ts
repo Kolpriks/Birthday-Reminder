@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { addBirthday } from './routes/birthdays/addBirthday';
 import { getAllBirthdays } from './routes/birthdays/getAllBirthdays';
+import { getBirthday } from './routes/birthdays/getBirthday';
 import { updateBirthday } from './routes/birthdays/updateBirthday';
 import { deleteBirthday } from './routes/birthdays/deleteBirthday';
 import { registerUser } from './routes/user/registerUser';
@@ -30,6 +31,7 @@ app.use('/api/add-birthday', addBirthday(sql));
 app.use('/api/get-all-birthdays', getAllBirthdays(sql));
 app.use('/api/update-birthday', updateBirthday(sql));
 app.use('/api/delete-birthday', deleteBirthday(sql));
+app.use('/api/birthday', getBirthday(sql));
 
 app.use('/api/user-register', registerUser(sql));
 app.use('/api/user-delete', deleteUser(sql));

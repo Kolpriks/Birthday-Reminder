@@ -14,21 +14,18 @@ export const loginUser = (sql: postgres.Sql<any>) => {
 		}
 
 		try {
-			// Ищем пользователя в базе данных
 			const user = await sql`
-        SELECT * FROM users WHERE email = ${email}
-      `;
+				SELECT * FROM users WHERE email = ${email}
+			`;
 			if (user.length === 0) {
 				return res.status(404).json({ error: 'User not found' });
 			}
 
-			// Сравниваем пароли
 			const isMatch = await bcrypt.compare(password, user[0].password);
 			if (!isMatch) {
 				return res.status(400).json({ error: 'Invalid credentials' });
 			}
 
-			// Генерация JWT токена
 			const token = jwt.sign({ id: user[0].id, email: user[0].email }, process.env.JWT_SECRET as string, {
 				expiresIn: '1d',
 			});

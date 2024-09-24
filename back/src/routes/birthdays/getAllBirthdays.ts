@@ -12,23 +12,18 @@ export const getAllBirthdays = (sql: postgres.Sql<any>) => {
 			return res.status(401).json({ error: 'Токен не предоставлен' });
 		}
 
-		const token = authHeader.split(' ')[1]; // Извлекаем токен
+		const token = authHeader.split(' ')[1];
 
 		try {
-			// Декодируем токен
 			const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload & { id: number };
 
-			// Проверяем наличие идентификатора пользователя в токене
+
 			if (!decoded || !decoded.id) {
 				return res.status(401).json({ error: 'Неверный токен' });
 			}
 
-			// Выполняем запрос на получение дней рождений для конкретного пользователя
-			const result = await sql`
-				SELECT * FROM birthdays WHERE user_id = ${decoded.id} ORDER BY birthdate
-			`;
+			const result = await sql`SELECT id, first_name, last_name, birthdate FROM birthdays WHERE user_id = ${decoded.id} ORDER BY birthdate`;
 
-			// Отправляем результат клиенту
 			res.status(200).json(result);
 		} catch (err) {
 			console.error(err);

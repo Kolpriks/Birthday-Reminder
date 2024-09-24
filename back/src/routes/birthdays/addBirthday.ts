@@ -15,7 +15,7 @@ export const addBirthday = (sql: postgres.Sql<any>) => {
 		const token = authHeader.split(' ')[1];
 
 		try {
-			// Верифицируем JWT-токен и получаем user_id
+
 			const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
 			const userId = decoded.id;
 
@@ -25,12 +25,11 @@ export const addBirthday = (sql: postgres.Sql<any>) => {
 				return res.status(400).json({ error: 'Все поля обязательны' });
 			}
 
-			// Вставляем запись с user_id
 			const result = await sql`
-        INSERT INTO birthdays (user_id, first_name, last_name, birthdate)
-        VALUES (${userId}, ${first_name}, ${last_name}, ${birthdate})
-        RETURNING *
-      `;
+				INSERT INTO birthdays (user_id, first_name, last_name, birthdate)
+				VALUES (${userId}, ${first_name}, ${last_name}, ${birthdate})
+				RETURNING *
+			`;
 
 			res.status(201).json(result[0]);
 		} catch (err) {

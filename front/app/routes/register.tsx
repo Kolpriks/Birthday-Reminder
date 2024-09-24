@@ -28,34 +28,67 @@ export default function Register() {
 	};
 
 	return (
-		<div className="container">
-			<h1>Регистрация</h1>
-			{error && <p className="error">{error}</p>}
-			<Form method="post" onSubmit={handleSubmit}>
-				<label>
-					Name:
-					<input type="name" name="name" required />
+		<div className="container mx-auto max-w-md p-6 bg-white shadow-lg rounded-lg">
+			<h1 className="text-2xl font-bold mb-4">Регистрация</h1>
+			{error && <p className="text-red-500 mb-4">{error}</p>}
+			<Form method="post" onSubmit={handleSubmit} className="space-y-4">
+				<label className="block">
+					<span className="text-gray-700">Имя:</span>
+					<input
+						type="text"
+						name="name"
+						required
+						className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+					/>
 				</label>
-				<label>
-					Surname:
-					<input type="surname" name="surname" required />
+				<label className="block">
+					<span className="text-gray-700">Фамилия:</span>
+					<input
+						type="text"
+						name="surname"
+						required
+						className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+					/>
 				</label>
-				<label>
-					Email:
-					<input type="email" name="email" required />
+				<label className="block">
+					<span className="text-gray-700">Email:</span>
+					<input
+						type="email"
+						name="email"
+						required
+						className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+					/>
 				</label>
-				<label>
-					Пароль:
-					<input type="password" name="password" required />
+				<label className="block">
+					<span className="text-gray-700">Пароль:</span>
+					<input
+						type="password"
+						name="password"
+						required
+						className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+					/>
 				</label>
-				<label>
-					Подтвердите пароль:
-					<input type="password" name="confirmPassword" required />
+				<label className="block">
+					<span className="text-gray-700">Подтвердите пароль:</span>
+					<input
+						type="password"
+						name="confirmPassword"
+						required
+						className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+					/>
 				</label>
-				<button type="submit">Зарегистрироваться</button>
+				<button
+					type="submit"
+					className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"
+				>
+					Зарегистрироваться
+				</button>
 			</Form>
-			<p>
-				Уже есть аккаунт? <Link to="/login">Авторизоваться</Link>
+			<p className="mt-4 text-center">
+				Уже есть аккаунт?{" "}
+				<Link to="/login" className="text-green-500 hover:underline">
+					Авторизоваться
+				</Link>
 			</p>
 		</div>
 	);

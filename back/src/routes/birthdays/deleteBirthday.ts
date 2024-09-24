@@ -9,13 +9,15 @@ export const deleteBirthday = (sql: postgres.Sql<any>) => {
 
 		try {
 			const result = await sql`
-        DELETE FROM birthdays
-        WHERE id = ${id}
-        RETURNING *
-      `;
+				DELETE FROM birthdays
+				WHERE id = ${id}
+				RETURNING *
+			`;
+
 			if (result.length === 0) {
 				return res.status(404).json({ error: 'Birthday not found' });
 			}
+
 			res.status(200).json({ message: 'Birthday deleted' });
 		} catch (err) {
 			console.error(err);

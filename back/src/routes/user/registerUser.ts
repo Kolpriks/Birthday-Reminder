@@ -20,6 +20,7 @@ export const registerUser = (sql: postgres.Sql<any>) => {
 				VALUES (${name}, ${surname}, ${email}, ${hashedPassword})
 				RETURNING id, email
 			`;
+
 			res.status(201).json(result[0]);
 		} catch (err) {
 			console.error(err);
